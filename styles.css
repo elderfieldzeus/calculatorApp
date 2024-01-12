@@ -19,7 +19,7 @@
 
 .main {
     display: flex;
-    margin: 40px;
+    margin: 35px;
     flex-direction: column;
     background-color: rgb(131, 130, 130);
     width: 340px;
