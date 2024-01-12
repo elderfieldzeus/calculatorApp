@@ -1,6 +1,6 @@
 //getting elements from HTML
 const ac = document.querySelector('#ac'),
-plusMinus = document.querySelector('#plusMinus'),
+clear = document.querySelector('#clear'),
 modulo = document.querySelector('#modulo'),
 divide = document.querySelector('#divide'),
 seven = document.querySelector('#seven'),
@@ -36,7 +36,6 @@ displayedNumber.innerHTML = num;
 const initialize = () => {
     num = "0";
     numInArrayForm.length = 0;
-    displayedNumber.textContent = num;
 }
 
 const displayNewNumber = (newNum) => {
@@ -47,6 +46,16 @@ const displayNewNumber = (newNum) => {
         numInArrayForm = num.split('');
         numInArrayForm.push(newNum);
         num = numInArrayForm.join('');
+        displayedNumber.textContent = num;
+    }
+}
+
+const clearOne = () => {
+    return () => {
+        numInArrayForm = num.split('');
+        numInArrayForm.pop();
+        num = numInArrayForm.join('');
+        if(num === "") num = "0";
         displayedNumber.textContent = num;
     }
 }
@@ -86,6 +95,14 @@ const showAnswer = () => {
     }
 }
 
+const clearAll = () => {
+    return () => {
+        initialize();
+        prevOperator = "N/A";
+        displayNewNumber.innerHTML = num;
+    }
+}
+
 //addingNumbers
 decimal.addEventListener("click", displayNewNumber("."));
 zero.addEventListener("click", displayNewNumber("0"));
@@ -108,3 +125,9 @@ modulo.addEventListener("click", calculate("%"));
 
 //show answer
 equal.addEventListener("click", showAnswer());
+
+//clear
+clear.addEventListener("click", clearOne());
+
+//clearAll
+ac.addEventListener("click", clearAll());
