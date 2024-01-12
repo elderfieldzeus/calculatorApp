@@ -24,7 +24,8 @@ let num = "0";
 let numInArrayForm = [];
 let total = 0;
 let prevOperator = "N/A";
-const MAX_LENGTH = 16; //digits
+const MAX_LENGTH = 15; //digits
+const MAX_NUM = 999999999999999;
 
 //add div to HTML
 const displayContainer = document.querySelector('.display');
@@ -62,14 +63,14 @@ const clearOne = () => {
     }
 }
 
-const checkDecimalPosition = () => {
-    let decimalChecker = num.split('');
+const checkDecimalPosition = (givenNum) => {
+    let decimalChecker = givenNum.split('');
     if(decimalChecker[decimalChecker.length] === ".") decimalChecker.pop();
-    num = decimalChecker.join('');
+    givenNum = decimalChecker.join('');
 }
 
 const checkOperator = () => {
-    checkDecimalPosition();
+    checkDecimalPosition(num);
     let floatNum = parseFloat(num);
     let error = false;
     switch(prevOperator) {
@@ -90,10 +91,19 @@ const checkOperator = () => {
             total = total;
     }
 
-    if(total > 9007199254740991){
+    if(total > MAX_NUM){
         error = true;
-        alert("ERROR: Number cannot be bigger than 9007199254740992")
+        alert(`ERROR: Number should not exceed ${MAX_NUM}.`);
     }
+    
+    let totalChecker = String(total).split('');
+
+    if(totalChecker.length > MAX_LENGTH){
+        totalChecker.length = MAX_LENGTH;
+        let decimalChecker = totalChecker.join('');
+        checkDecimalPosition(decimalChecker);
+        total = parseFloat(decimalChecker);
+    }  
 
     displayedNumber.innerHTML = error ? "ERROR" : total;
     if(error){
