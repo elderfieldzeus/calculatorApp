@@ -3,3 +3,75 @@
     margin: 0;
     border: 0;
 }
+
+.body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: beige;
+    background-blend-mode: soft-light;
+}
+
+#title {
+    margin-top: 25px;
+    text-decoration: underline;
+}
+
+.main {
+    display: flex;
+    margin: 40px;
+    flex-direction: column;
+    background-color: rgb(131, 130, 130);
+    width: 340px;
+    height: 486px;
+    border: 0.15rem solid black;
+}
+
+.display {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: white;
+    border: 2px solid black;
+    margin: 32px;
+    height: 45px;
+}
+
+.display > h1 {
+    margin-right: 5px;
+}
+
+.buttons {
+    align-self: center;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    font-weight: 600;
+    width: 69px;
+    height: 69px;
+    margin: -1px;
+    border: 2px solid black;
+    cursor: pointer;
+    background-color: rgb(206, 206, 206);
+}
+
+#zero {
+    width: 136px;
+}
+
+.first > button{
+    background-color: rgb(243, 93, 93);
+}
+
+#equal {
+    background-color: rgb(248, 185, 67);
+}
+
+button:hover {
+    filter: brightness(0.8);
+}

@@ -24,6 +24,7 @@ let num = "0";
 let numInArrayForm = [];
 let total = 0;
 let prevOperator = "N/A";
+const MAX_LENGTH = 16; //digits
 
 //add div to HTML
 const displayContainer = document.querySelector('.display');
@@ -44,6 +45,7 @@ const displayNewNumber = (newNum) => {
         if(num === "0" && newNum != ".") num = "";
 
         numInArrayForm = num.split('');
+        if(numInArrayForm.length === MAX_LENGTH) return
         numInArrayForm.push(newNum);
         num = numInArrayForm.join('');
         displayedNumber.textContent = num;
@@ -60,8 +62,16 @@ const clearOne = () => {
     }
 }
 
+const checkDecimalPosition = () => {
+    let decimalChecker = num.split('');
+    if(decimalChecker[decimalChecker.length] === ".") decimalChecker.pop();
+    num = decimalChecker.join('');
+}
+
 const checkOperator = () => {
+    checkDecimalPosition();
     let floatNum = parseFloat(num);
+    let error = false;
     switch(prevOperator) {
         case "N/A": 
             total = floatNum; break;
@@ -72,9 +82,23 @@ const checkOperator = () => {
         case "*":
             total *= floatNum; break;
         case "/":
-            total /= floatNum; break;
+            floatNum != 0 ? total /= floatNum: error = true; 
+            break;
         case "%":
-            total %= floatNum; break
+            total %= floatNum; break;
+        case "=":
+            total = total;
+    }
+
+    if(total > 9007199254740991){
+        error = true;
+        alert("ERROR: Number cannot be bigger than 9007199254740992")
+    }
+
+    displayedNumber.innerHTML = error ? "ERROR" : total;
+    if(error){
+        total = 0;
+        initialize();
     }
 }
 
@@ -86,20 +110,11 @@ const calculate = (operation) => {
     }
 }
 
-const showAnswer = () => {
-    return () => {
-        checkOperator();
-        num = String(total);
-        displayedNumber.innerHTML = num;
-        prevOperator = "N/A";
-    }
-}
-
 const clearAll = () => {
     return () => {
         initialize();
         prevOperator = "N/A";
-        displayNewNumber.innerHTML = num;
+        displayedNumber.innerHTML = num;
     }
 }
 
@@ -122,9 +137,7 @@ minus.addEventListener("click", calculate("-"));
 multiply.addEventListener("click", calculate("*"));
 divide.addEventListener("click", calculate("/"));
 modulo.addEventListener("click", calculate("%"));
-
-//show answer
-equal.addEventListener("click", showAnswer());
+equal.addEventListener("click", calculate("="));
 
 //clear
 clear.addEventListener("click", clearOne());
