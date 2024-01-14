@@ -32,6 +32,7 @@
 
 .display {
     display: flex;
+    overflow: hidden;
     justify-content: flex-end;
     align-items: center;
     background-color: white;
